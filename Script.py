@@ -29,7 +29,7 @@ print("Loading data, max unique words = %d words\n" % max_words)
 (train_x, train_y), (test_x, test_y) = \
   K.datasets.imdb.load_data(seed=1, num_words=max_words)
 
-max_review_len = 80
+max_review_len = 100000
 train_x = K.preprocessing.sequence.pad_sequences(train_x,
   truncating='pre', padding='pre', maxlen=max_review_len)
 test_x = K.preprocessing.sequence.pad_sequences(test_x,
@@ -40,7 +40,7 @@ print("Creating LSTM model")
 e_init = K.initializers.RandomUniform(-0.01, 0.01, seed=1)
 init = K.initializers.glorot_uniform(seed=1)
 simple_adam = K.optimizers.Adam()
-embed_vec_len = 32  # values per word
+embed_vec_len = 500  # values per word
 
 model = K.models.Sequential()
 model.add(K.layers.embeddings.Embedding(input_dim=max_words,
@@ -57,7 +57,7 @@ print(model.summary())
 
 # 3. train model
 bat_size = 32
-max_epochs = 3
+max_epochs = 5
 print("\nStarting training ")
 model.fit(train_x, train_y, epochs=max_epochs,
   batch_size=bat_size, shuffle=True, verbose=1) 
@@ -70,7 +70,7 @@ print("Test data: loss = %0.6f  accuracy = %0.2f%% " % \
 
 # 5. save model
 print("Saving model to disk \n")
-mp = "C:\\Users\\user\\Documents\\Assignment\\Level 6 Year 2\\imdb_model_v2.h5"
+mp = "C:\\Users\\user\\Documents\\Assignment\\Level 6 Year 2\\GIT\\Project\\imdb_model_v3.h5"
 model.save(mp)
 
 # 6. use model
